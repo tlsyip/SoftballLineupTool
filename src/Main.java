@@ -10,6 +10,7 @@ public class Main {
     private static int numOuts = 0;
     private static int homePts = 0;
     private static int awayPts = 0;
+    private static int inningScore = 0;
     private static boolean batting;
     private static boolean topInning = true;
     private static Scanner input = new Scanner(System.in);
@@ -44,7 +45,7 @@ public class Main {
             if (action.equals("Q")) {
                 System.out.println("Exiting...");
                 System.exit(0);
-            } else if (action.equals("B")) {
+            } else if (action.equals("B") && batting) {
                 nextBatter();
             } else if (action.equals("O")) {
                 numOuts++;
@@ -54,11 +55,23 @@ public class Main {
                 }
             } else if (action.equals("A")) {
                 awayPts++;
+                inningScore++;
+                if (inningScore==5) {
+                    System.out.println("Mercy rule - switch sides");
+                    nextHalfInning();
+                    inningScore = 0;
+                }
             } else if (action.equals("H")) {
                 homePts++;
+                inningScore++; 
+                if (inningScore==5) {
+                    System.out.println("Mercy rule - switch sides");
+                    nextHalfInning();
+                    inningScore = 0;
+                }
             }
             else {
-                System.out.println("Invalid input. Use B, I, O, or Q.");
+                System.out.println("Invalid input");
             }
         }
     }
