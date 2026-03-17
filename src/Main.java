@@ -12,22 +12,39 @@ public class Main {
 
 
     public static void main(String[] args) {
+        //load lineups
         loadBattingLineup();
         loadFieldingLineup();
-        System.out.println("Enter side: Home/Away");
+
+        // initial lineup
+        System.out.println("Enter side: Home/Away"); //determine which lineup to print first
         String side = (input.nextLine());
-        if (side.equalsIgnoreCase("Home")) {
+
+        if (side.equalsIgnoreCase("Home")) { //home team = fielding first
             batting = false;
             printFieldingLineup();
         }
-        else if (side.equalsIgnoreCase("Away")) {
+        else if (side.equalsIgnoreCase("Away")) { //away team = batting first
             batting = true;
             printBattingOrder();
         }
         else {
-            System.out.println("Invalid input. Quitting program.");
+            System.out.println("Invalid input. Quitting program."); //invalid input
             System.exit(0);
         }
+
+        System.out.println("Press B for next batter, I for next half inning, Q to quit.");
+
+        String action = input.nextLine().trim().toUpperCase();
+            if (action.equals("Q")) {
+                System.out.println("Exiting...");
+            } else if (action.equals("I")) {
+                nextHalfInning();
+            } else if (action.equals("B")) {
+                // nextBatter();
+            } else {
+                System.out.println("Invalid input. Use B, I, or Q.");
+            }
     }
 
     private static void loadBattingLineup () {
@@ -64,7 +81,7 @@ public class Main {
 
     private static void printBattingOrder() {
         System.out.println("\nCurrent Batting Order:");
-        for (int i = 0; i < battingLineup.size(); i++) {
+        for (int i = 0; i < currentBatterIndex+3; i++) {
             String marker = "<- Next up";
             if (i==currentBatterIndex) {
                 System.out.println((i + 1) + ". " + battingLineup.get(i) + marker);
