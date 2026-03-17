@@ -41,7 +41,7 @@ public class Main {
             } else if (action.equals("I")) {
                 nextHalfInning();
             } else if (action.equals("B")) {
-                // nextBatter();
+                nextBatter();
             } else {
                 System.out.println("Invalid input. Use B, I, or Q.");
             }
@@ -51,9 +51,19 @@ public class Main {
        try {
             Scanner fileScanner = new Scanner(new File("BattingLineup.txt"));
             while (fileScanner.hasNextLine()) {
-                String name = fileScanner.nextLine().trim();
-                if (!name.isEmpty()) {
-                    battingLineup.add(new Player(name));
+                String [] info = fileScanner.nextLine().split(",");
+                if (info.length>=3) {
+                    boolean pitcher;
+                    String name = info[0].trim();
+                    String gender = info[1].trim();
+                    if (info[2].trim().equals("true")) {
+                        pitcher = true;
+                    }
+                    else {
+                        pitcher = false;
+                    }
+
+                    battingLineup.add(new Player(name, gender, pitcher));
                 }
             }
             fileScanner.close();
@@ -81,7 +91,7 @@ public class Main {
 
     private static void printBattingOrder() {
         System.out.println("\nCurrent Batting Order:");
-        for (int i = 0; i < currentBatterIndex+3; i++) {
+        for (int i = currentBatterIndex; i < currentBatterIndex+4; i++) {
             String marker = "<- Next up";
             if (i==currentBatterIndex) {
                 System.out.println((i + 1) + ". " + battingLineup.get(i) + marker);
@@ -103,6 +113,11 @@ public class Main {
         } else {
             System.out.println("No fielding lineup for this inning.");
         }
+    }
+
+    private static void nextBatter() {
+        currentBatterIndex++;
+        printBattingOrder();
     }
 
     private static void nextHalfInning() {

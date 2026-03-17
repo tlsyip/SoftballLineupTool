@@ -1,24 +1,24 @@
-Cyrus
-Valerie
-Tyler
-Victor
-Koen
-Jasmine
-Harry
-Ethan
-Naomi
-Tommy
-Awana
-Eliot
-Joseph
-Bridget
-Travis
-Daniel C
-Taylor
-Dennis
-Charmaine
-Will
-Misia
-Kayu
-Elise
-Daniel T
+Cyrus,M,false
+Valerie,F,false
+Tyler,M,false
+Victor,M,true
+Koen,M,false
+Jasmine,F,false
+Harry,M,false
+Ethan,M,false
+Naomi,F,false
+Tommy,M,false
+Awana,F,false
+Eliot,M,true
+Joseph,M,false
+Bridget,F,false
+Travis,M,false
+Daniel C,M,false
+Taylor,F,false
+Dennis,M,false
+Charmaine,F,false
+Will,M,false
+Misia,F,false
+Kayu,M,false
+Elise,F,false
+Daniel T,M,false
