@@ -7,7 +7,11 @@ public class Main {
     private static ArrayList<String> fieldingLineup = new ArrayList<>();
     private static int currentBatterIndex = 0;
     private static int inning = 1;
+    private static int numOuts = 0;
+    private static int homePts = 0;
+    private static int awayPts = 0;
     private static boolean batting;
+    private static boolean topInning = true;
     private static Scanner input = new Scanner(System.in);
 
 
@@ -33,18 +37,30 @@ public class Main {
             System.exit(0);
         }
 
-        System.out.println("Press B for next batter, I for next half inning, Q to quit.");
-
-        String action = input.nextLine().trim().toUpperCase();
+        while (true) {
+            System.out.println("\nHome -  " + homePts + " | Away - " + awayPts + "\nInning: " + inning + " | Number of Outs: " + numOuts + "\n");
+            System.out.println("Press B for next batter, O to add an out, H if the home team scores, A if the away team scores and Q to quit.");
+            String action = input.nextLine().trim().toUpperCase();
             if (action.equals("Q")) {
                 System.out.println("Exiting...");
-            } else if (action.equals("I")) {
-                nextHalfInning();
+                System.exit(0);
             } else if (action.equals("B")) {
                 nextBatter();
-            } else {
-                System.out.println("Invalid input. Use B, I, or Q.");
+            } else if (action.equals("O")) {
+                numOuts++;
+                if (numOuts==3) {
+                    System.out.println("3 outs - switch sides");
+                    nextHalfInning();
+                }
+            } else if (action.equals("A")) {
+                awayPts++;
+            } else if (action.equals("H")) {
+                homePts++;
             }
+            else {
+                System.out.println("Invalid input. Use B, I, O, or Q.");
+            }
+        }
     }
 
     private static void loadBattingLineup () {
@@ -92,9 +108,13 @@ public class Main {
     private static void printBattingOrder() {
         System.out.println("\nCurrent Batting Order:");
         for (int i = currentBatterIndex; i < currentBatterIndex+4; i++) {
-            String marker = "<- Next up";
+            String battingNow = "<- Batting now";
+            String onDeck = "<- On deck";
             if (i==currentBatterIndex) {
-                System.out.println((i + 1) + ". " + battingLineup.get(i) + marker);
+                System.out.println((i + 1) + ". " + battingLineup.get(i) + battingNow);
+            }
+            else if (i==currentBatterIndex + 1 ){
+                System.out.println((i + 1) + ". " + battingLineup.get(i) + onDeck);
             }
             else {
                 System.out.println((i + 1) + ". " + battingLineup.get(i));
@@ -111,7 +131,8 @@ public class Main {
                 System.out.println(pos.trim());
             }
         } else {
-            System.out.println("No fielding lineup for this inning.");
+            System.out.println("No innings remain. Game over.");
+            System.exit(0);
         }
     }
 
@@ -121,12 +142,23 @@ public class Main {
     }
 
     private static void nextHalfInning() {
+        if (topInning) {
+            topInning = false;
+        }
+        else {
+            topInning = true;
+            inning++;
+        }
+
         if (batting) {
             batting = false;
             printFieldingLineup();
+            numOuts = 0;
         }
-        else {
+        else if (!batting){
+            batting = true;
             printBattingOrder();
+            numOuts = 0;
         }
     }
 
