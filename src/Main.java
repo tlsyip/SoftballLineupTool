@@ -58,6 +58,7 @@ public class Main {
                 inningScore++;
                 if (inningScore==5) {
                     System.out.println("Mercy rule - switch sides");
+                    System.out.println("\nHome -  " + homePts + " | Away - " + awayPts);
                     nextHalfInning();
                     inningScore = 0;
                 }
@@ -66,6 +67,7 @@ public class Main {
                 inningScore++; 
                 if (inningScore==5) {
                     System.out.println("Mercy rule - switch sides");
+                    System.out.println("\nHome -  " + homePts + " | Away - " + awayPts);
                     nextHalfInning();
                     inningScore = 0;
                 }
